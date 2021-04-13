@@ -10,7 +10,7 @@ require('dotenv').config();
 
 console.log(process.env.DATABASE_URL);
 
-mongoose.connect('mongodb+srv://bradcurtis74:ccsdb123@merncluster.jevcz.mongodb.net/sales?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect();
 
 const app = express();
 app.use(morgan('common'));
