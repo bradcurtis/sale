@@ -10,7 +10,7 @@ require('dotenv').config();
 
 console.log(process.env.DATABASE_URL);
 
-mongoose.connect();
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
 app.use(morgan('common'));
