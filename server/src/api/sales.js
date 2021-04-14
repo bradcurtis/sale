@@ -4,15 +4,17 @@ const router = Router();
 
 const SaleHouseEntry = require('../models/garagesale');
 
-router.get('/', (req, res) => {
-  res.json({
-    message: 'globe',
-  });
+router.get('/', async (req, res, next) => {
+  try {
+    const saleHouseEntries = await SaleHouseEntry.find();
+    res.json(saleHouseEntries);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.post('/', async (req, res, next) => {
   try {
-      console.log(req.body);
     const saleHouseEntry = new SaleHouseEntry(req.body);
     const createdSaleHouseEntry = await saleHouseEntry.save();
     res.json(createdSaleHouseEntry);
