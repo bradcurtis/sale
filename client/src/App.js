@@ -2,6 +2,10 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import ReactMapGL,{ Marker } from 'react-map-gl';
 import {listLogEntries} from './api'
+import mapboxgl from 'mapbox-gl';
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 const App = () => {
   const [logEntries, setLogEntries] = useState([]);
