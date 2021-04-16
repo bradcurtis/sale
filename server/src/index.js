@@ -8,7 +8,7 @@ const sales = require('./api/sales');
 require('dotenv').config();
 // const middlewares = require('./middlewares');
 
-console.log(process.env.DATABASE_URL);
+// console.log(process.env.DATABASE_URL);
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
