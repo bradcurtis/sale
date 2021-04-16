@@ -8,6 +8,8 @@ import mapboxgl from 'mapbox-gl';
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 const App = () => {
+  const API_URL = process.env.REACT_APP_APIURL; 
+  console.log(API_URL);
   const [logEntries, setLogEntries] = useState([]);
   const [viewport, setViewport] = useState({
     width: 1200,
@@ -19,12 +21,13 @@ const App = () => {
 
   useEffect( () =>{
     (async() =>{
-      const logEntries = await listLogEntries();
+
+      const logEntries = await listLogEntries(API_URL);
       setLogEntries(logEntries);
     }
 
     )() 
-  }, []  )
+  }, [API_URL]  )
 
   return (
     <ReactMapGL

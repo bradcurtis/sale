@@ -1,6 +1,9 @@
-const API_URL = 'https://arcane-plains-20636.herokuapp.com'
+// eslint-disable-next-line no-unused-vars
+import * as React from 'react';
 
-export async function listLogEntries(){
-  const response = await fetch(`${API_URL}/api/sales`)  
+// const API_URL = process.env.REACT_APP_API_URL || 'https://arcane-plains-20636.herokuapp.com' 
+
+export async function listLogEntries(api){
+  const response = await fetch(api+"/api/sales");
   return response.json();
 }
