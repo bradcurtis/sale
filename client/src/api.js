@@ -5,5 +5,6 @@ import * as React from 'react';
 
 export async function listLogEntries(api){
   const response = await fetch(api+"/api/sales");
+  console.log(response.json());
   return response.json();
 }
