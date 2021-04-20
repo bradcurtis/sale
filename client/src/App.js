@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import ReactMapGL,{ Marker } from 'react-map-gl';
+import ReactMapGL,{ Marker,Popup } from 'react-map-gl';
 import {listLogEntries} from './api'
 import mapboxgl from 'mapbox-gl';
 
@@ -11,6 +11,7 @@ const App = () => {
   const API_URL = process.env.REACT_APP_APIURL; 
   console.log(API_URL);
   const [logEntries, setLogEntries] = useState([]);
+  const[showPopup,setShowPopup] = useState({});
   const [viewport, setViewport] = useState({
     width: 1200,
     height: 1200,
@@ -37,22 +38,41 @@ const App = () => {
     >
       {
         logEntries.map( entry =>(
-          <Marker longitude={entry.location.coordinates[0]} 
+          <div
+          onClick={() => setShowPopup({
+            showPopup,
+            [entry._id]: true,
+          })}
+          >
+          <Marker 
+          key={entry._id}
+          longitude={entry.location.coordinates[0]} 
           latitude={entry.location.coordinates[1]}
           offsetLeft={-20}>
+          <div>{entry.house}</div>
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"  fill="none" className="css-i6dzq1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+
+        </Marker>
+        {
+          showPopup[entry._id] ? (
+            <Popup
+            latitude={entry.location.coordinates[1]}
+            longitude={entry.location.coordinates[0]}
+            closeButton={true}
+            closeOnClick={false}
+            onClose={() => this.setState({showPopup: false})}
+            anchor="top" >
             <div>{entry.house}</div>
-<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </Popup>
+          ) : null
+        }
 
- </Marker>
-            
-
-          
-                
-          
-         
-        
-        ))
+        </div>
+             
+       ))
       }
+
+
       </ReactMapGL>
   );
 }
