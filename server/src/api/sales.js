@@ -15,6 +15,8 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
+    // eslint-disable-next-line no-console
+    console.log(req.body);
     const saleHouseEntry = new SaleHouseEntry(req.body);
     const createdSaleHouseEntry = await saleHouseEntry.save();
     res.json(createdSaleHouseEntry);
