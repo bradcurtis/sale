@@ -23,8 +23,8 @@ const App = () => {
     zoom: 15
   });
 
-  const handleClick = async () => {
-    console.log('Click happened');
+  const handleClick = async (object) => {
+    console.log(object);
     const logEntries = await listLogEntries(API_URL);
     setLogEntries(logEntries);
   }
