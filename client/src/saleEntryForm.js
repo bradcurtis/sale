@@ -22,10 +22,13 @@ const SaleEntryForm = (location, close) =>{
         <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="house">House</label>
         <input name="house" {...register("house")}></input>
+        <br></br>
         <label htmlFor="family">Family</label>
-        <input name="family" {...register("family")}></input>         
-            <label htmlFor="comments.body">Family</label>
+        <input name="family" {...register("family")}></input> 
+        <br></br>        
+            <label htmlFor="comments.body">Sale Comments</label>
             <input name="comments.body" {...register("comments.body")}></input> 
+            <br></br>
              
             <button disabled={loading}>{loading ? 'Loading...' : 'Create Entry'}</button>
         
