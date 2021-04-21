@@ -4,6 +4,7 @@ import ReactMapGL,{ Marker,Popup } from 'react-map-gl';
 import {listLogEntries} from './api'
 import mapboxgl from 'mapbox-gl';
 import SaleEntryForm from './saleEntryForm';
+import CommentEntry from './commentEntry';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
@@ -22,6 +23,12 @@ const App = () => {
     zoom: 15
   });
 
+  const handleClick = async () => {
+    console.log('Click happened');
+    const logEntries = await listLogEntries(API_URL);
+    setLogEntries(logEntries);
+  }
+
   useEffect( () =>{
     (async() =>{
 
@@ -31,6 +38,10 @@ const App = () => {
 
     )() 
   }, [API_URL]  )
+
+
+
+ 
 
   const showAddMarkerPopup = (event) =>{
     console.log(event);
@@ -52,8 +63,7 @@ const App = () => {
         logEntries.map( entry =>(
           <div
           onClick={() => setShowPopup({
-            showPopup,
-            [entry._id]: true,
+            showPopup,[entry._id]: true,
           })}
           >
           <Marker 
@@ -72,9 +82,12 @@ const App = () => {
             longitude={entry.location.coordinates[0]}
             closeButton={true}
             closeOnClick={false}
-            onClose={() => this.setState({showPopup: false})}
+            onClose={() => setShowPopup({
+              showPopup,[entry._id]: false,
+            })}
             anchor="top" >
-            <div>{entry.house}</div>
+            <div><h3>{entry.house}</h3></div>
+            <CommentEntry comments={entry.comments}></CommentEntry>
           </Popup>
           ) : null
         }
@@ -102,7 +115,8 @@ const App = () => {
             onClose={() => setAddEntryLocation(null)}
             anchor="top" >
             <h3>Add Garage Sale House</h3>
-            <SaleEntryForm location={addEntryLocation}></SaleEntryForm>
+            <SaleEntryForm close={handleClick}
+                        location={addEntryLocation}> </SaleEntryForm>
           </Popup>
             </>
         ) : null
