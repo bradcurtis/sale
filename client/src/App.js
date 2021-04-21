@@ -8,9 +8,11 @@ import CommentEntry from './commentEntry';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
+//require('dotenv').config();
+const API_URL = process.env.REACT_APP_APIURL;
 
 const App = () => {
-  const API_URL = process.env.REACT_APP_APIURL; 
+  
   console.log(API_URL);
   const [logEntries, setLogEntries] = useState([]);
   const[showPopup,setShowPopup] = useState({});
@@ -23,11 +25,14 @@ const App = () => {
     zoom: 15
   });
 
-  const handleClick = async (object) => {
-    console.log(object);
-    const logEntries = await listLogEntries(API_URL);
+  const getEntries = async () => {
+    const logEntries = await listLogEntries();
     setLogEntries(logEntries);
-  }
+  };
+
+
+
+  const handleClick = event => console.log(event.target.dataset)
 
   useEffect( () =>{
     (async() =>{
@@ -37,7 +42,7 @@ const App = () => {
     }
 
     )() 
-  }, [API_URL]  )
+  } )
 
 
 
@@ -115,12 +120,17 @@ const App = () => {
             onClose={() => setAddEntryLocation(null)}
             anchor="top" >
             <h3>Add Garage Sale House</h3>
-            <SaleEntryForm close={handleClick}
-                        location={addEntryLocation}> </SaleEntryForm>
+            <h3>{typeof(handleClick)}</h3>
+            <SaleEntryForm onClose={() => {
+                setAddEntryLocation(null);
+                getEntries();
+              }} 
+              location={addEntryLocation}> </SaleEntryForm>
           </Popup>
             </>
         ) : null
       }
+
 
       </ReactMapGL>
   );

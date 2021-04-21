@@ -3,23 +3,26 @@ import { useForm } from "react-hook-form";
 import { createLogEntry } from './api';
 
 
-const SaleEntryForm = (location, close) =>{
+const SaleEntryForm = (location, onClose) =>{
     const API_URL = process.env.REACT_APP_APIURL; 
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit } = useForm();
-    console.log(typeof(close));
+
+   
+    
     const  onSubmit = async (data) => {
         setLoading(true);
         data.location = {type:"Point",
-        coordinates:[location.location.longitude,location.location.latitude]};        
+        coordinates:[location.location.longitude,location.location.latitude]};      
         
         const created =  await createLogEntry(API_URL,data);
-        console.log(typeof(close));
+        console.log(location.onClose);
         console.log(created);        
-        close();
+        location.onClose();
     }
     return(
         <form onSubmit={handleSubmit(onSubmit)}>
+        <h3>{typeof(onClose)}</h3>
         <label htmlFor="house">House</label>
         <input name="house" {...register("house")}></input>
         <br></br>
