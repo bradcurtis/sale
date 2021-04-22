@@ -13,6 +13,12 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.delete('/:id', async (req, res, next) => {
+  SaleHouseEntry.findOneAndDelete(req.params.id)
+    .then(res.status(200).json({ message: 'Successful' }))
+    .catch((err) => next(err));
+});
+
 router.post('/', async (req, res, next) => {
   try {
     // eslint-disable-next-line no-console

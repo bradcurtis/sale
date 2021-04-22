@@ -8,6 +8,11 @@ export async function listLogEntries(api){
   return response.json();
 }
 
+export async function getAddress(latitude, longitude){
+  const response = await fetch(`http://www.mapquestapi.com/geocoding/v1/reverse?key=nfqtYkGKtV9LCi2lVftPBqlJARMx39AC&location=${latitude},${longitude}&includeRoadMetadata=true&includeNearestIntersection=true`)
+  return response.json();
+}
+
 export async function createLogEntry(api, entry){
   const response = await fetch(api+"/api/sales",{
     method: 'POST',
@@ -16,6 +21,13 @@ export async function createLogEntry(api, entry){
 
     },
     body: JSON.stringify(entry),
+  });  
+  return response.json();
+}
+
+export async function deleteLogEntry(api, id){
+  const response = await fetch(`${api}/api/sales/${id}`,{
+    method: 'DELETE'
   });  
   return response.json();
 }
