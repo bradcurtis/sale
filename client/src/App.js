@@ -117,7 +117,7 @@ const App = () => {
             <CommentEntry comments={entry.comments}></CommentEntry>
             <button onClick={() => {
                 console.log(entry._id);
-                deleteEntry(entry._id);
+                //deleteEntry(entry._id);
                 setShowPopup({
                   showPopup,[entry._id]: false,
                 })
