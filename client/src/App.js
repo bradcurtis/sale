@@ -115,13 +115,7 @@ const App = () => {
               <div className="popup">
             <h3>{entry.house}</h3>
             <CommentEntry comments={entry.comments}></CommentEntry>
-            <button onClick={() => {
-                console.log(entry._id);
-                //deleteEntry(entry._id);
-                setShowPopup({
-                  showPopup,[entry._id]: false,
-                })
-              }} >delete</button>
+           
             </div>
           </Popup>
           ) : null
