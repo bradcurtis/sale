@@ -5,6 +5,8 @@ import {listLogEntries,deleteLogEntry} from './api'
 import mapboxgl from 'mapbox-gl';
 import SaleEntryForm from './saleEntryForm';
 import CommentEntry from './commentEntry';
+import Login from './login';
+import useToken from './useToken';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
@@ -12,6 +14,7 @@ mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worke
 const API_URL = process.env.REACT_APP_APIURL;
 
 const App = () => {
+  
   
   //console.log(API_URL);
   const [logEntries, setLogEntries] = useState([]);
@@ -34,6 +37,7 @@ const App = () => {
     await deleteLogEntry(API_URL,id);
   }
 
+  const { token, setToken } = useToken();
 
 
 
@@ -60,7 +64,15 @@ const App = () => {
     })
   }
 
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+
   return (
+
+    
+
+    
     <div>
       <h1 align='center'>Oxford Oaks Garage Sale</h1>
       <h4 align='center'>double click on your approximate address and enter your information</h4>

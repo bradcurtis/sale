@@ -31,3 +31,15 @@ export async function deleteLogEntry(api, id){
   });  
   return response.json();
 }
+
+export async function loginToken(api, entry){
+  const response = await fetch(api+"/api/login",{
+    method: 'POST',
+    headers: {
+      'content-type':'application/json',
+
+    },
+    body: JSON.stringify(entry),
+  });  
+  return response.json();
+}

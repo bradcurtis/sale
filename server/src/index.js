@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const sales = require('./api/sales');
+const login = require('./api/login');
 
 require('dotenv').config();
 // const middlewares = require('./middlewares');
@@ -30,6 +31,8 @@ app.get('/', (req, rest) => {
 });
 
 app.use('/api/sales', sales);
+
+app.use('/api/login', login);
 
 app.use((req, rest, next) => {
   const error = new Error(`Not Found  --> ${req.originalUrl}`);
